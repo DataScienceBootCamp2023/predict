@@ -1,15 +1,15 @@
-
 {% extends 'base.html' %}
 
-{% block title %} Strings Matcher {% endblock %}
+{% block title %} Credit Card Default Prediction {% endblock %}
 
 {% block head %}
  {{ super() }}
+ 
 {% endblock %}
 
 {% block body %}
 
-<h3>Strings Matcher</h3>
+<h3>Credit Card Default Prediction</h3>
 
 <!-- INPUT FORM -->
 <br><h5>Upload your Excel files
@@ -17,52 +17,91 @@
     </h5>
 
 
-<form method="post" enctype="multipart/form-data">
-    <br><div class="container"><div class="form-row">
-        <div class="col form-group">
-            <h6>Lookup list
-                <button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="left" title="List with values to be matched, in the Left-join that's the left side"><span class="fa fa-info-circle"></span></button>
-            </h6>
-            <div class="file-upload-wrapper">
-                <input type="file" name="dtf_lookup" id="input-file-now" class="file-upload" required value={{request.form.dtf_lookup}}>
-            </div>
-        </div>
-        
-        <div class="col form-group">
-            <h6>Match list
-                <button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="left" title="List with values to match with, in the Left-join that's the right side"><span class="fa fa-info-circle"></span></button>
-            </h6>
-            <div class="file-upload-wrapper">
-                <input type="file" name="dtf_match" id="input-file-now" class="file-upload" required value={{request.form.dtf_match}}>
-            </div>
-        </div>
-
-        <div class="col form-group"></div>
-    </div></div>
-
-    <script>
-        $(".file-upload").file_upload();
-    </script>
-    
-
-    <br><h5>Similarity threshold
-            <button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="left" title="Minimum similarity score to return, it goes from 0 to 1. If 1 it works exactly like a Left-join or Vlookup"><span class="fa fa-info-circle"></span></button>    
-        </h5>
-        
-        <div class="form-row"><div class="d-flex col-md-1">
-            <input type="range" min="0" max="1" step="0.1" value="0.7" oninput="RangeValue.innerText=this.value"
-                   class="custom-range form-control" name="threshold" required value={{request.form.threshold}}>
-        </div><label id="RangeValue">0.7</label></div>
-    
-
-    <br><h5>Top matches
-            <button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="left" title="Maximum number of matches to return. If 1 it shows only the best match, if greater than 1 it shows multiple matches"><span class="fa fa-info-circle"></span></button>    
-        </h5>
-        <div class="form-row"><div class="col-md-1">
-            <input type="text" name="top" class="form-control" placeholder="1" value={{request.form.top}}>
-        </div></div>
-        
-    <br><br><button type="submit" class="btn btn-primary" id="btnMatch">Match</button>
-</form>
+<form method="post" action="/predict" enctype="multipart/form-data">
+    <label for="limit_bal">Limit Balance</label>
+    <input type="number" id="limit_bal" name="limit_bal" required>
+    <br>
+    <label for="sex">Sex</label>
+    <select id="sex" name="sex" required>
+      <option value="2">Female</option>
+      <option value="1">Male</option>
+    </select>
+    <br>
+    <label for="education">Education</label>
+    <select id="education" name="education" required>
+      <option value="5">Advanced/Professional</option>
+      <option value="4">College</option>
+      <option value="3">High School</option>
+      <option value="2">Other</option>
+      <option value="1">University</option>
+    </select>
+    <br>
+    <label for="marriage">Marriage</label>
+    <select id="marriage" name="marriage" required>
+      <option value="3">Divorced</option>
+      <option value="2">Married</option>
+      <option value="1">Single</option>
+      <option value="0">Other</option>
+    </select>
+    <br>
+    <label for="age">Age</label>
+    <input type="number" id="age" name="age" required>
+    <br>
+    <label for="pay_1">Pay 1</label>
+    <input type="number" id="pay_1" name="pay_1" required>
+    <br>
+    <label for="pay_2">Pay 2</label>
+    <input type="number" id="pay_2" name="pay_2" required>
+    <br>
+    <label for="pay_3">Pay 3</label>
+    <input type="number" id="pay_3" name="pay_3" required>
+    <br>
+    <label for="pay_4">Pay 4</label>
+    <input type="number" id="pay_4" name="pay_4" required>
+    <br>
+    <label for="pay_5">Pay 5</label>
+    <input type="number" id="pay_5" name="pay_5" required>
+    <br>
+    <label for="pay_6">Pay 6</label>
+    <input type="number" id="pay_6" name="pay_6" required>
+    <br>
+    <label for="bill_amt_1">Bill Amount 1</label>
+    <input type="number" id="bill_amt_1" name="bill_amt_1" required>
+    <br>
+    <label for="bill_amt_2">Bill Amount 2</label>
+    <input type="number" id="bill_amt_2" name="bill_amt_2" required>
+    <br>
+    <label for="bill_amt_3">Bill Amount 3</label>
+    <input type="number" id="bill_amt_3" name="bill_amt_3" required>
+    <br>
+    <label for="bill_amt_4">Bill Amount 4</label>
+    <input type="number" id="bill_amt_4" name="bill_amt_4" required>
+    <br>
+    <label for="bill_amt_5">Bill Amount 5</label>
+    <input type="number" id="bill_amt_5" name="bill_amt_5" required>
+    <br>
+    <label for="bill_amt_6">Bill Amount 6</label>
+    <input type="number" id="bill_amt_6" name="bill_amt_6" required>
+    <br>
+    <label for="pay_amt_1">Pay Amount 1</label>
+    <input type="number" id="pay_amt_1" name="pay_amt_1" required>
+    <br>
+    <label for="pay_amt_2">Pay Amount 2</label>
+    <input type="number" id="pay_amt_2" name="pay_amt_2" required>
+    <br>
+    <label for="pay_amt_3">Pay Amount 3</label>
+    <input type="number" id="pay_amt_3" name="pay_amt_3" required>
+    <br>
+    <label for="pay_amt_4">Pay Amount 4</label>
+    <input type="number" id="pay_amt_4" name="pay_amt_4" required>
+    <br>
+    <label for="pay_amt_5">Pay Amount 5</label>
+    <input type="number" id="pay_amt_5" name="pay_amt_5" required>
+    <br>
+    <label for="pay_amt_6">Pay Amount 6</label>
+    <input type="number" id="pay_amt_6" name="pay_amt_6" required>
+    <br>
+  <button type="submit" id="predict-button">Predict</button>
+  </form>
 
 {% endblock %}
