@@ -12,38 +12,34 @@ from settings import config
 
 ## app
 app = flask.Flask(__name__, 
-				instance_relative_config=True, 
-       			template_folder=config.root+'client/templates',
+                instance_relative_config=True, 
+                    template_folder=config.root+'client/templates',
                 static_folder=config.root+'client/static')
-
 
 
 # main
 @app.route("/", methods=['GET','POST'])
 def index():
-	try:
-		if flask.request.method == 'POST':
-			## data from client
-			## data from client
-			app.logger.info(flask.request.files)
-			app.logger.info(flask.request.form)
+    try:
+        if flask.request.method == 'POST':
+            # data from client
+            app.logger.info(flask.request.files)
+            app.logger.info(flask.request.form)
             dtf_input = pd.read_excel(flask.request.files["dtf_input"])            
-			top = 1 if flask.request.form["top"].strip() == "" else int(flask.request.form["top"])
-			app.logger.warning("--- Inputs Received ---")
-                                
-			model_name = flask.request.form["model"]
-			
-					## predict
-			model = CreditCardDefaultPrediction(dtf_input)
-			predictions = model.predict(model_name, top=top)
-			xlsx_out = model.write_excel(predictions)
-			return flask.send_file(xlsx_out, attachment_filename='CreditCardDefaultPrediction.xlsx', as_attachment=True)             
-		else:
-			return flask.render_template("index.html")
+            top = 1 if flask.request.form["top"].strip() == "" else int(flask.request.form["top"])
+            app.logger.warning("--- Inputs Received ---")
+            
+            # predict
+            model = CreditCardDefaultPrediction(dtf_input)
+            predictions = model.predict(top=top)
+            xlsx_out = model.write_excel(predictions)
+            return flask.send_file(xlsx_out, attachment_filename='CreditCardDefaultPrediction.xlsx', as_attachment=True)             
+        else:
+            return flask.render_template("index.html")
 
-	except Exception as e:
-		app.logger.error(e)
-		flask.abort(500)
+    except Exception as e:
+        app.logger.error(e)
+        flask.abort(500)
  
 # errors
 @app.errorhandler(404)
@@ -53,6 +49,7 @@ def page_not_found(e):
 
 @app.errorhandler(500)
 def internal_server_error(e):
+    app.logger.error(e)
     return flask.render_template('errors.html', msg="Something went terribly wrong"), 500
 
 
