@@ -15,7 +15,7 @@ class CreditCardDefaultPrediction():
     def __init__(self, dtf_input):
       self.dtf_input = dtf_input
       
-    def __init__(self):
+    
        # Load the training dataset from the CSV file
        self.df = pd.read_csv('UCI_Credit_Card.csv')
        # Renaming the target column for better reference. 
