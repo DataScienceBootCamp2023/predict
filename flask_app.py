@@ -29,9 +29,10 @@ def index():
             app.logger.warning("--- Inputs Received ---")
             
             # predict
-            model = CreditCardDefaultPrediction(dtf_input)
-            predictions = model.predict()
-            xlsx_out = model.write_excel(predictions)
+            ccdp = CreditCardDefaultPrediction(dtf_input)
+            model_name = RandomForestClassifier()
+            predictions = ccdp.predict(model_name)
+            xlsx_out = ccdp.write_excel(predictions)
             return flask.send_file(xlsx_out, attachment_filename='CreditCardDefaultPrediction.xlsx', as_attachment=True)             
         else:
             return flask.render_template("index.html")
