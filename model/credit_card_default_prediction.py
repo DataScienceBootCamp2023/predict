@@ -35,7 +35,7 @@ class CreditCardDefaultPrediction():
         self.X_train, self.X_test, self.y_train, self.y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
         # Initialize the model with the training data
-        model = CreditCardDefaultPrediction(X_train, y_train)
+       # model = CreditCardDefaultPrediction(X_train, y_train)
         class FeatureConstructor(BaseEstimator, TransformerMixin):
             def __init__(self):
                 pass
