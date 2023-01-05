@@ -1,12 +1,9 @@
 import pandas as pd
-#import numpy as np
-#from sklearn import feature_extraction, metrics
+from sklearn import feature_extraction
 import io
-from tqdm import tqdm
 from sklearn.model_selection import train_test_split
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.ensemble import RandomForestClassifier
-#from sklearn.metrics import accuracy_score
 from sklearn.preprocessing import StandardScaler
 from sklearn.decomposition import PCA
 from sklearn.pipeline import Pipeline
@@ -43,32 +40,31 @@ class CreditCardDefaultPrediction():
             def __init__(self):
                 pass
 
-            def fit(self, self.X, self.y=None):
+            def fit(self, X, y=None):
                 return self
 
-            def transform(self, self.X, self.y=None):
-                 # Construct your new features here and return the modified DataFrame
-                return self.X
-        # Define the feature engineering pipeline with Feature transformation(Scaling), Feature construction, Feature extraction(PCA)
+            def transform(self, X, y=None):
+                # Construct your new features here and return the modified DataFrame
+                return X
+
+           # Define the feature engineering pipeline with Feature transformation(Scaling), Feature construction, Feature extraction(PCA)
         feature_engineering_pipeline = Pipeline([
             ('scaler', StandardScaler()),
             ('constructor', FeatureConstructor()),
-            ('pca', PCA())
+            ('pca', PCA()),
+            ('model', model)
         ])
-        self.model_name = RandomForestClassifier()
         # Transform the features using the pipeline
         X_train_transformed = feature_engineering_pipeline.fit_transform(self.X_train)
         X_test_transformed = feature_engineering_pipeline.transform(self.X_test)
 
         # Fit the model on the transformed features
         model.fit(X_train_transformed, self.y_train) 
-
-        # Make predictions on the input data
+            # Make predictions on the input data
         predictions = model.predict(self.dtf_input.iloc[:, 1:-1])
-        # Create a dataframe with the predictions
-        dtf_predictions = pd.DataFrame(predictions, columns=["default"])
-        # Convert the predictions to Yes/No labels
-        dtf_predictions["default"] = dtf_predictions["default"].apply(lambda x: "Yes" if x==1 else "No")
+        # Create a dataframe with the predictions and the original data
+        dtf_predictions = pd.concat([self.dtf_input.iloc[:, 0], pd.DataFrame(predictions, columns=["default"])], axis=1)
+        dtf_predictions["default"] = dtf_predictions["default"].apply(lambda x: "Yes" if x==1 else "No"
 
         return dtf_predictions
 
@@ -76,7 +72,7 @@ class CreditCardDefaultPrediction():
     def write_excel(dtf_predictions):
         bytes_file = io.BytesIO()
         excel_writer = pd.ExcelWriter(bytes_file)
-        dtf_predictions.to_excel(excel_writer, sheet_name='Sheet2', na_rep='', index=False)
+        dtf_predictions.to_excel(excel_writer, sheet_name='Sheet1', na_rep='', index=False)
         excel_writer.save()
         bytes_file.seek(0)
         return bytes_file
