@@ -1,5 +1,4 @@
 import pandas as pd
-from sklearn import feature_extraction
 import io
 from sklearn.model_selection import train_test_split
 from sklearn.tree import DecisionTreeClassifier
@@ -7,7 +6,6 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.preprocessing import StandardScaler
 from sklearn.decomposition import PCA
 from sklearn.pipeline import Pipeline
-from sklearn.base import BaseEstimator, TransformerMixin
 
 class CreditCardDefaultPrediction():
     def __init__(self, dtf_input):
@@ -36,18 +34,7 @@ class CreditCardDefaultPrediction():
 
         # Initialize the model with the training data
        # model = CreditCardDefaultPrediction(X_train, y_train)
-        class FeatureConstructor(BaseEstimator, TransformerMixin):
-            def __init__(self):
-                pass
-
-            def fit(self, X, y=None):
-                return self
-
-            def transform(self, X, y=None):
-                # Construct your new features here and return the modified DataFrame
-                return X
-
-           # Define the feature engineering pipeline with Feature transformation(Scaling), Feature construction, Feature extraction(PCA)
+       # Define the feature engineering pipeline with Feature transformation(Scaling), Feature construction, Feature extraction(PCA)
         feature_engineering_pipeline = Pipeline([
             ('scaler', StandardScaler()),
             ('constructor', FeatureConstructor()),
