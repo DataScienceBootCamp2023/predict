@@ -26,12 +26,11 @@ def index():
             app.logger.info(flask.request.files)
             app.logger.info(flask.request.form)
             dtf_input = pd.read_excel(flask.request.files["dtf_input"])            
-            top = 1 if flask.request.form["top"].strip() == "" else int(flask.request.form["top"])
             app.logger.warning("--- Inputs Received ---")
             
             # predict
             model = CreditCardDefaultPrediction(dtf_input)
-            predictions = model.predict(top=top)
+            predictions = model.predict()
             xlsx_out = model.write_excel(predictions)
             return flask.send_file(xlsx_out, attachment_filename='CreditCardDefaultPrediction.xlsx', as_attachment=True)             
         else:
