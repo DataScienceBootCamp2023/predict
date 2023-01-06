@@ -1,1 +1,1 @@
-web gunicorn flask_app:app --preload --workers 1 --timeout 120
+web gunicorn flask_app:app --preload --workers 10 --timeout 12000
