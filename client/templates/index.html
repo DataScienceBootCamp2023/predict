@@ -13,25 +13,12 @@
 <br><h5>Upload your Excel file with the credit card data
 <button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="left" title="Upload excel file with the credit card data"><span class="fa fa-info-circle"></span></button>
 </h5>
-<form method="post" enctype="multipart/form-data">
-    <br><div class="container"><div class="form-row">
-        <div class="col form-group">
-            <h6>Credit card data
-                <button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="left" title="Excel file with the credit card data"><span class="fa fa-info-circle"></span></button>
-            </h6>
-            <div class="file-upload-wrapper">
-                <input type="file" name="credit_card_data" id="input-file-now" class="file-upload" required value={{request.form.credit_card_data}}>
-            </div>
-        </div>
-
-    <div class="col form-group"></div>
-</div></div>
-
-<script>
-    $(".file-upload").file_upload();
-</script>
-
-<br><br><button type="submit" class="btn btn-primary" id="btnPredict">Predict</button>
-</form>
+    <form method='POST' enctype='multipart/form-data'>
+      <label>Input File:</label>
+      <input type='file' name='input_file' required><br>
+      <label>Model File:</label>
+      <input type='file' name='model_file' required><br>
+      <input type='submit' value='Predict'>
+    </form>
 
 {% endblock %}
