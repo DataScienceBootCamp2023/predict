@@ -1,24 +1,54 @@
+
 {% extends 'base.html' %}
 
-{% block title %} Credit Card Default Prediction {% endblock %}
+{% block title %} Strings Matcher {% endblock %}
 
 {% block head %}
-{{ super() }}
+ {{ super() }}
 {% endblock %}
 
 {% block body %}
-<h3>Credit Card Default Prediction</h3>
-<!-- INPUT FORM -->
 
-<br><h5>Upload your Excel file with the credit card data
-<button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="left" title="Upload excel file with the credit card data"><span class="fa fa-info-circle"></span></button>
-</h5>
-    <form method='POST' enctype='multipart/form-data'>
-      <label>Input File:</label>
-      <input type='file' name='input_file' required><br>
-      <label>Model File:</label>
-      <input type='file' name='model_file' required><br>
-      <input type='submit' value='Predict'>
-    </form>
+<h3>Strings Matcher</h3>
+
+<!-- INPUT FORM -->
+<br><h5>Upload your Excel files
+        <button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="left" title="Upload excel files with only one column, even if you put multiple columns only the first one will be used"><span class="fa fa-info-circle"></span></button>
+    </h5>
+
+
+<form method="post" enctype="multipart/form-data">
+    <br><div class="container"><div class="form-row">
+        <div class="col form-group">
+            <h6>Credit Card Data
+                <button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="left" title="Excel file with the credit card data"><span class="fa fa-info-circle"></span></button>
+            </h6>
+            <div class="file-upload-wrapper">
+                <input type="file" name="dtf_lookup" id="input-file-now" class="file-upload" required value={{request.form.dtf_credit_data}}>
+            </div>
+        </div>
+        
+        <div class="col form-group">
+            <h6>Model Training Data
+                <button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="left" title="List with values to match with, in the Left-join that's the right side"><span class="fa fa-info-circle"></span></button>
+            </h6>
+            <div class="file-upload-wrapper">
+                <input type="file" name="dtf_match" id="input-file-now" class="file-upload" required value={{request.form.dtf_model_data}}>
+            </div>
+        </div>
+
+        <div class="col form-group"></div>
+    </div></div>
+
+    <script>
+        $(".file-upload").file_upload();
+    </script>
+    
+
+   
+        
+        
+    <br><br><button type="submit" class="btn btn-primary" id="btnMatch">Predict</button>
+</form>
 
 {% endblock %}
