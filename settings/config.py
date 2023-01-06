@@ -21,7 +21,7 @@ ENV = "PROD"
 
 ## server
 host = "0.0.0.0"
-port = int(os.environ.get("PORT", 6000))
+port = int(os.environ.get("PORT", 5500))
 debug = True if ENV == "DEV" else False
 
 
