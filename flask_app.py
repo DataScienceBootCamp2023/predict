@@ -6,7 +6,7 @@
 ## pkg
 import flask
 import pandas as pd
-
+from sklearn.ensemble import RandomForestClassifier
 from model.credit_card_default_prediction import CreditCardDefaultPrediction
 from settings import config
 
